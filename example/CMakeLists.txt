@@ -5,13 +5,14 @@ add_library(native_app_glue
     ${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c)
 
 set(SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/src/main/cpp)
+set(LIB_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 
 add_library(test2
   SHARED
     ${SOURCE_DIR}/main.c
     ${SOURCE_DIR}/ft.c
     ${SOURCE_DIR}/testcpp.cpp
-    ${SOURCE_DIR}/fake_dlfcn.c)
+    ${LIB_DIR}/fake_dlfcn.c)
 
 target_include_directories(test2
   PRIVATE
