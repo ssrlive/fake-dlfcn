@@ -58,10 +58,12 @@ int ft_init(struct ctx *c)
     }	
     c->fctx = ctx;
 
-#ifdef __arm__
+#if defined(__arm__) || defined(__i386__)
     ctx->ftlib = fake_dlopen("/system/lib/libft2.so", RTLD_NOW);
-#else
+#elif defined(__aarch64__) || defined(__x86_64__)
     ctx->ftlib = fake_dlopen("/system/lib64/libft2.so", RTLD_NOW);
+#else
+#error "Arch unknown, please port me"
 #endif
     log_info("fake_dlopen for libft2.so returned %p", ctx->ftlib);
 

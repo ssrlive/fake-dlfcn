@@ -299,9 +299,9 @@ void android_main(struct android_app* app)
 
     app_dummy();
 
-#ifdef __arm__
+#if defined(__arm__) || defined(__i386__)
     log_info("starting arm code");
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) || defined(__x86_64__)
     log_info("starting aarch64 code");
 #else
 #error "Arch unknown, please port me" 

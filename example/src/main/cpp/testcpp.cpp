@@ -27,9 +27,9 @@ The function below loads Android "libutils.so" to run the following c++ code:
 extern "C" int test_cplusplus()
 {
     log_info("testing libutils.so");
-#ifdef __arm__
+#if defined(__arm__) || defined(__i386__)
     void *handle = fake_dlopen("/system/lib/libutils.so", RTLD_NOW);
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) || defined(__x86_64__)
     void *handle = fake_dlopen("/system/lib64/libutils.so", RTLD_NOW);
 #else
 #error "Arch unknown, please port me" 
