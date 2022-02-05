@@ -60,8 +60,11 @@ int ft_init(struct ctx *c)
 
 #if defined(__arm__) || defined(__i386__)
     ctx->ftlib = fake_dlopen("/system/lib/libft2.so", RTLD_NOW);
+    /* NB: /system/vendor/lib and /vendor/lib to be checked for libs like libssl */
 #elif defined(__aarch64__) || defined(__x86_64__)
     ctx->ftlib = fake_dlopen("/system/lib64/libft2.so", RTLD_NOW);
+    /* NB: /system/vendor/lib64 and /vendor/lib64 to be checked for libs like libssl */
+    if(!ctx->ftlib) ctx->ftlib = fake_dlopen("/apex/com.android.conscrypt/lib64/libft2.so", RTLD_NOW);
 #else
 #error "Arch unknown, please port me"
 #endif
