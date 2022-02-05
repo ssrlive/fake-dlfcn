@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 31
+    buildToolsVersion '31.0.0'
+    ndkVersion '23.1.7779620'
 
     defaultConfig {
         applicationId 'com.test2'
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion 23
+        targetSdkVersion 31
         versionCode 1
         versionName '1.0'
 
@@ -40,6 +41,12 @@ android {
     externalNativeBuild {
         cmake {
             path 'CMakeLists.txt'
+            version '3.18.1'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
