@@ -34,7 +34,7 @@
 #error "Arch unknown, please port me"
 #endif
 
-struct ctx {
+struct fake_dl_ctx {
     void *load_addr;
     void *dynstr;
     void *dynsym;
@@ -42,10 +42,10 @@ struct ctx {
     off_t bias;
 };
 
-int fake_dlclose(void *handle)
+int fake_dlclose(struct fake_dl_ctx *handle)
 {
     if (handle) {
-        struct ctx *ctx = (struct ctx *)handle;
+        struct fake_dl_ctx *ctx = (struct fake_dl_ctx *)handle;
         if (ctx->dynsym)
             free(ctx->dynsym); /* we're saving dynsym and dynstr */
         if (ctx->dynstr)
@@ -57,11 +57,11 @@ int fake_dlclose(void *handle)
 
 /* flags are ignored */
 
-void *fake_dlopen(const char *libpath, int flags)
+struct fake_dl_ctx *fake_dlopen(const char *libpath, int flags)
 {
     FILE *maps;
     char buff[256];
-    struct ctx *ctx = 0;
+    struct fake_dl_ctx *ctx = 0;
     off_t load_addr, size;
     int k, fd = -1, found = 0;
     void *shoff;
@@ -111,7 +111,7 @@ void *fake_dlopen(const char *libpath, int flags)
     if (elf == MAP_FAILED)
         fatal("mmap() failed for %s", libpath);
 
-    ctx = (struct ctx *)calloc(1, sizeof(struct ctx));
+    ctx = (struct fake_dl_ctx *)calloc(1, sizeof(struct fake_dl_ctx));
     if (!ctx)
         fatal("no memory for %s", libpath);
 
@@ -173,20 +173,22 @@ err_exit:
     return 0;
 }
 
-void *fake_dlsym(void *handle, const char *name)
+void *fake_dlsym(struct fake_dl_ctx *handle, const char *name)
 {
     int k;
-    struct ctx *ctx = (struct ctx *)handle;
+    struct fake_dl_ctx *ctx = (struct fake_dl_ctx *)handle;
     Elf_Sym *sym    = (Elf_Sym *)ctx->dynsym;
     char *strings   = (char *)ctx->dynstr;
 
-    for (k = 0; k < ctx->nsyms; k++, sym++)
-        if (strcmp(strings + sym->st_name, name) == 0) {
+    for (k = 0; k < ctx->nsyms; k++, sym++) {
+        const char *method = strings + sym->st_name;
+        if (strcmp(method, name) == 0) {
             /*  NB: sym->st_value is an offset into the section for relocatables, 
                 but a VMA for shared libs or exe files, so we have to subtract the bias */
             void *ret = ctx->load_addr + sym->st_value - ctx->bias;
             log_info("%s found at %p", name, ret);
             return ret;
         }
+    }
     return 0;
 }

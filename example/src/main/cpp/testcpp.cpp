@@ -23,9 +23,9 @@ extern "C" int test_cplusplus()
 {
     log_info("testing libutils.so");
 #if defined(__arm__) || defined(__i386__)
-    void *handle = fake_dlopen("/system/lib/libutils.so", RTLD_NOW);
+    struct fake_dl_ctx *handle = fake_dlopen("/system/lib/libutils.so", RTLD_NOW);
 #elif defined(__aarch64__) || defined(__x86_64__)
-    void *handle = fake_dlopen("/system/lib64/libutils.so", RTLD_NOW);
+    struct fake_dl_ctx *handle = fake_dlopen("/system/lib64/libutils.so", RTLD_NOW);
 #else
 #error "Arch unknown, please port me"
 #endif

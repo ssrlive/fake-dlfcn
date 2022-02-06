@@ -5,9 +5,11 @@
 extern "C" {
 #endif
 
-void *fake_dlopen(const char *filename, int flags);
-void *fake_dlsym(void *handle, const char *symbol);
-int fake_dlclose(void *handle);
+struct fake_dl_ctx;
+
+struct fake_dl_ctx *fake_dlopen(const char *filename, int flags);
+void *fake_dlsym(struct fake_dl_ctx *handle, const char *symbol);
+int fake_dlclose(struct fake_dl_ctx *handle);
 
 #if defined(__cplusplus)
 }
