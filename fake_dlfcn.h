@@ -19,11 +19,9 @@ extern "C" {
 #error "Arch unknown, please port me"
 #endif
 
-struct fake_dl_ctx;
-
-struct fake_dl_ctx *fake_dlopen(const char *filename, int flags);
-void *fake_dlsym(struct fake_dl_ctx *handle, const char *symbol);
-int fake_dlclose(struct fake_dl_ctx *handle);
+void *fake_dlopen(const char *filename, int flags);
+void *fake_dlsym(void *handle, const char *symbol);
+int fake_dlclose(void *handle);
 
 #if defined(__cplusplus)
 }

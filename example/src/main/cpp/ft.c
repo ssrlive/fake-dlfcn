@@ -33,7 +33,7 @@ struct bitmap {
 };
 
 struct ft_ctx {
-    struct fake_dl_ctx *ftlib;        /* handle to libft2.so */
+    void *ftlib;        /* handle to libft2.so */
     FT_Library library; /* ft2 initialised */
     FT_Face face;       /* current face for output */
     int fsize;          /* its point size */

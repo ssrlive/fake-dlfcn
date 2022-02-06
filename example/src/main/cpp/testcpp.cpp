@@ -22,7 +22,7 @@ The function below loads Android "libutils.so" to run the following c++ code:
 extern "C" int test_cplusplus()
 {
     log_info("testing libutils.so");
-    struct fake_dl_ctx *handle = fake_dlopen(SYSTEM_LIB_PATH "libutils.so", RTLD_NOW);
+    void *handle = fake_dlopen(SYSTEM_LIB_PATH "libutils.so", RTLD_NOW);
 
     if (!handle)
         return log_error("cannot load libutils.so\n");

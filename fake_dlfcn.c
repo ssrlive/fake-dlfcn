@@ -44,7 +44,7 @@ struct fake_dl_ctx {
     off_t bias;
 };
 
-int fake_dlclose(struct fake_dl_ctx *handle)
+int fake_dlclose(void *handle)
 {
     if (handle) {
         struct fake_dl_ctx *ctx = (struct fake_dl_ctx *)handle;
@@ -59,7 +59,7 @@ int fake_dlclose(struct fake_dl_ctx *handle)
 
 /* flags are ignored */
 
-struct fake_dl_ctx *fake_dlopen(const char *libpath, int flags)
+void *fake_dlopen(const char *libpath, int flags)
 {
     FILE *maps;
     char buff[256];
@@ -175,7 +175,7 @@ err_exit:
     return 0;
 }
 
-void *fake_dlsym(struct fake_dl_ctx *handle, const char *name)
+void *fake_dlsym(void *handle, const char *name)
 {
     int k;
     struct fake_dl_ctx *ctx = (struct fake_dl_ctx *)handle;
@@ -197,17 +197,17 @@ void *fake_dlsym(struct fake_dl_ctx *handle, const char *name)
 
 #else
 
-struct fake_dl_ctx *fake_dlopen(const char *filename, int flags) {
+void *fake_dlopen(const char *filename, int flags) {
     (void)filename;
     (void)flags;
     return NULL;
 }
-void *fake_dlsym(struct fake_dl_ctx *handle, const char *symbol) {
+void *fake_dlsym(void *handle, const char *symbol) {
     (void)handle;
     (void)symbol;
     return NULL;
 }
-int fake_dlclose(struct fake_dl_ctx *handle) {
+int fake_dlclose(void *handle) {
     (void)handle;
     return 0;
 }
