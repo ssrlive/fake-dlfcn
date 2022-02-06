@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "fake_dlfcn.h"
 
 #if defined(__ANDROID__)
@@ -5,8 +7,6 @@
 #include <android/log.h>
 #include <elf.h>
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
 #include <unistd.h>
