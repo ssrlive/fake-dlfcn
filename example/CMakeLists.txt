@@ -12,11 +12,13 @@ add_library(test2
     ${SOURCE_DIR}/main.c
     ${SOURCE_DIR}/ft.c
     ${SOURCE_DIR}/testcpp.cpp
+    ${LIB_DIR}/fake_dlfcn.h
     ${LIB_DIR}/fake_dlfcn.c)
 
 target_include_directories(test2
   PRIVATE
     ${ANDROID_NDK}/sources/android/native_app_glue
+    ${LIB_DIR}
     ${SOURCE_DIR}/include/freetype)
 
 target_link_libraries(test2

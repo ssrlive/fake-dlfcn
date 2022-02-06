@@ -8,7 +8,7 @@ add_library(Nougat_dlfunctions
 
 target_include_directories(Nougat_dlfunctions
   PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}/include)
+    ${SOURCE_DIR})
 
 target_link_libraries(Nougat_dlfunctions
     android
