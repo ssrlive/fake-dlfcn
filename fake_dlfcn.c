@@ -1,3 +1,7 @@
+#include "fake_dlfcn.h"
+
+#if defined(__ANDROID__)
+
 #include <android/log.h>
 #include <elf.h>
 #include <fcntl.h>
@@ -6,8 +10,6 @@
 #include <string.h>
 #include <sys/mman.h>
 #include <unistd.h>
-
-#include "fake_dlfcn.h"
 
 #define TAG_NAME "fake_dlfcn"
 
@@ -192,3 +194,22 @@ void *fake_dlsym(struct fake_dl_ctx *handle, const char *name)
     }
     return 0;
 }
+
+#else
+
+struct fake_dl_ctx *fake_dlopen(const char *filename, int flags) {
+    (void)filename;
+    (void)flags;
+    return NULL;
+}
+void *fake_dlsym(struct fake_dl_ctx *handle, const char *symbol) {
+    (void)handle;
+    (void)symbol;
+    return NULL;
+}
+int fake_dlclose(struct fake_dl_ctx *handle) {
+    (void)handle;
+    return 0;
+}
+
+#endif /* __ANDROID__ */

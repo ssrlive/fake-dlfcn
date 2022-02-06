@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include <android_native_app_glue.h>
+#include <fake_dlfcn.h>
 #include <sys/system_properties.h>
 
 #include "main.h"
@@ -314,13 +315,19 @@ void android_main(struct android_app *app)
 
     app_dummy();
 
-#if defined(__arm__) || defined(__i386__)
-    log_info("starting arm code");
-#elif defined(__aarch64__) || defined(__x86_64__)
-    log_info("starting aarch64 code");
+#if defined(__aarch64__)
+#define FAKE_ARCH_TYPE "arm64"
+#elif defined(__arm__)
+#define FAKE_ARCH_TYPE "arm"
+#elif defined(__x86_64__)
+#define FAKE_ARCH_TYPE "x64"
+#elif defined(__i386__)
+#define FAKE_ARCH_TYPE "x86"
 #else
 #error "Arch unknown, please port me"
 #endif
+
+    log_info("starting %s code", FAKE_ARCH_TYPE);
 
 #ifdef TESTCPP
     test_cplusplus();
