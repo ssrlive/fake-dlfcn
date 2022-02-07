@@ -316,7 +316,7 @@ void android_main(struct android_app *app)
     app_dummy();
 
 #if defined(__aarch64__)
-#define FAKE_ARCH_TYPE "arm64"
+#define FAKE_ARCH_TYPE "arm64 (aarch64)"
 #elif defined(__arm__)
 #define FAKE_ARCH_TYPE "arm"
 #elif defined(__x86_64__)
