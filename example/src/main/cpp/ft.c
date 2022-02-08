@@ -8,7 +8,7 @@
 #include <wchar.h>
 #endif
 #include <android_native_app_glue.h>
-#include <fake_dlfcn.h>
+#include <fake-dlfcn.h>
 
 #include <elf.h>
 #include <fcntl.h>

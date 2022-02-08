@@ -1,6 +1,6 @@
 #include <android/log.h>
 #include <dlfcn.h>
-#include <fake_dlfcn.h>
+#include <fake-dlfcn.h>
 #include <unistd.h>
 
 #define TAG_NAME "test2:test_cplusplus"

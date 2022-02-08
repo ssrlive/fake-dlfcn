@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #include <android_native_app_glue.h>
-#include <fake_dlfcn.h>
+#include <fake-dlfcn.h>
 #include <sys/system_properties.h>
 
 #include "main.h"

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "fake_dlfcn.h"
+#include "fake-dlfcn.h"
 
 #if defined(__ANDROID__)
 
@@ -11,7 +11,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#define TAG_NAME "fake_dlfcn"
+#define TAG_NAME "fake-dlfcn"
 
 #define log_info(fmt, args...) \
     __android_log_print(ANDROID_LOG_INFO, TAG_NAME, (const char *)fmt, ##args)
